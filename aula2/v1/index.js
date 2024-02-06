@@ -1,7 +1,10 @@
+const Joi = require("joi");
+const pino = require("pino-http");
 const express = require("express");
 const app = express();
 
 app.use(express.json());
+app.use(pino());
 
 const posts = [
   {
@@ -13,26 +16,26 @@ const posts = [
   },
 ];
 
-app.use((req, res, next) => {
-  console.log("[request]", req.method, req.url);
-  next();
-  console.log("[response]", req.method, req.url, res.statusCode);
-});
-
 app.get("/posts", (req, res) => {
   res.status(200).json(posts);
 });
 
+// post schema
+const postSchema = Joi.object({
+  title: Joi.string().min(5).required(),
+  content: Joi.string().min(10).required(),
+  date: Joi.date(),
+  tags: Joi.array().items(Joi.string()),
+});
+
 app.post("/posts", (req, res) => {
-  // validations
-  if (!req.body.title || req.body.title.length < 5) {
-    return res.status(400).json({
-      error: "invalid title",
-    });
+  const { error, value } = postSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json(error.details);
   }
 
   // add to database
-  posts.push(req.body);
+  posts.push(value);
 
   // response
   res.status(201).json(posts[posts.length - 1]);
