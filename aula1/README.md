@@ -2,6 +2,8 @@
 
 Introdução a backend development
 
+![web](web.jpg)
+
 ## Node.js
 
 Runtime que permite executar JavaScript fora do browser.

@@ -55,7 +55,7 @@ Tal como em qualquer outro projeto, à medida que o código cresce, aumenta tamb
 
 Seja qual for a abordagem, a ideia é criar [separação de conceitos](https://en.wikipedia.org/wiki/Separation_of_concerns) e desacopolação de módulos (loosely coupled, para ser mais correto). Queremos então camadas que são de responsabilidade contida, e que são facilmente ligadas e desligadas umas das outras. Isto é o que nos permite adicionar funcionalidade sem ter que mudar centenas de linhas de código, mesmo estando num projeto de grande dimensão. Para elém disso, torna-se mais fácil implementar testes automáticos, bem como a leitura/manutenção do código se torna mais simpática.
 
-![arch](architecture.jpeg)
+![arch](architecture.png)
 
 Duas abordagens comuns para um servidor web desenvolvido com Express (ou semelhante), são: organização por camadas, ou por featuer/domínio.
 
