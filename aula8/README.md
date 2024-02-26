@@ -34,3 +34,17 @@ As informações de autenticação são armazenadas no próprio token JWT, que �
 
 As passwords em plain-text (como as escrevemos) NUNCA são guardadas nas bases de dados.
 Para guardar uma password, é necessário transformá-la num texto ilegivel mas que pode ser comprado com o texto original. Isto é possível através de uma função hash. No Node.js, podemos usar o package [bcrypt](https://www.npmjs.com/package/bcrypt) que nos dá as funcionalidades que necessitamos: a função "hash" para criar uma hash a partir de um texto, e uma função "compare" para comparar um texto normal com uma hash e verificar se são equivalentes.
+
+# Tokens JWT
+
+Os tokens JWT são um standard que define um formato de transferência de dados de forma segura, usando JSON. Estes tokens podem ser assinados criptográficamente e verificados para garantir que tanto a sua origiem (assinatura) como o seu conteúdo são de confiança.
+
+De forma muito simplificada, o nosso backend guarda um segredo (no fundo, uma password), que usa para criar tokens JWT. Como apenas o nosso sistema conhece esta password, conseguimos posteriorment verificar se um determinado token é válido, ou seja, se foi assinado/gerado pelo nosso backend. A verificação da assinatura garante também que o conteúdo do token não foi manipulado.
+
+Estes tokens são muito utilizados para fins de autenticação, como explicado acima. Depois da aplicação web/mobile enviar um request com as credenciais do user (após este efetuar login), em troca pode receber um token JWT. Posteriormente estes tokens são enviados nos requests à API que o emitiu.
+
+Habitualmente de curta validade, funcionam como um certificado que garante que quem os possuí, se autenticou com sucesso. Uma boa analogia é o cartão de cidadão. Embora a sua validade seja maior, o conceito base é muito semelhante: é emitido para uma única entidade e serve como prova de identificação, existem mecanismos que garantem a sua autenticidade, quando expira podemos obter um novo.
+
+No Node.js, podemos recorrer ao package [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken), que tem as duas funções que precisamos para trabalhar com tokens: `sign` para os criarmos, `verify` para os validarmos e extraír o payload.
+
+https://jwt.io/introduction
